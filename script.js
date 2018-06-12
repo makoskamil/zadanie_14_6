@@ -1,5 +1,6 @@
 var Counter = React.createClass({
     getInitialState: function() {
+        console.log('Ustawiam domyślne wartości dla state');
         return {
             counter: 0
         };
@@ -11,40 +12,39 @@ var Counter = React.createClass({
         });
     },
 
+    decrement: function() {
+      if (this.state.counter > 0) {
+        this.setState({
+            counter: this.state.counter - 1
+        });
+      }
+    },
+  
+    componentWillMount: function() {
+      console.log('przed renderowaniem');
+    },
+  
+    componentDidMount: function() {
+      console.log('po renderowaniu');
+    },
+
     render: function() {
-        return React.createElement('div', {onClick: this.increment},
-            React.createElement('span', {}, 'Licznik ' + this.state.counter)
+        console.log('renderuje komponent...');
+        return React.createElement('div', {},
+            React.createElement('span', {}, 'Licznik ' + this.state.counter),
+            React.createElement('button', {onClick: this.decrement}, '-'),
+            React.createElement('button', {onClick: this.increment}, '+')
         );
     }
 });
+var element = React.createElement('div', {}, 
+  React.createElement(Counter),
+  React.createElement(Counter),
+  React.createElement(Counter),
+  React.createElement(Counter)
+);
 
-
-/* var element = 
-    React.createElement('div', {},
-        React.createElement('h1', {}, 'Licznik'),
-        React.createElement('div', {}, Counter)
-    );
-
-ReactDOM.render(element, document.getElementById('app'));
-
-*/
-
-
-
-
-/* render: function() {
-    return (
-        React.createElement('div', {className: 'contactItem'},
-            React.createElement('img', {
-                className: 'contactImage',
-                src: 'http://icons.veryicon.com/ico/System/100%20Flat%20Vol.%202/contacts.ico'
-            }),
-            React.createElement('p', {className: 'contactLabel'}, 'Imię: ' + this.props.item.firstName),
-            React.createElement('p', {className: 'contactLabel'}, 'Nazwisko: ' + this.props.item.lastName),
-            React.createElement('a', {className: 'contactEmail', href: 'mailto: ' + this.props.item.email}, 
-                this.props.item.email
-            )
-        )
-    )
-}
-*/
+ReactDOM.render(
+  element,
+  document.getElementById('app')
+);
